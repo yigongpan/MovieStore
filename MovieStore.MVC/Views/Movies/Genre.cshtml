@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MoviesStore.Core.Entities.Movie>
+    <div>
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var movie in Model)
+                {
+                    <partial name="_MovieCard" model="movie" />
+                }
+            </div>
+        </div>
+
+    </div>

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MovieStore.Core.Entities.Review>
+
+<div class="row">
+    <h3>Reviews you made</h3>
+</div>
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <div class="list-group-item">
+            <p>Movie: @item.Movie.Title</p>
+            <p>Review text: @item.ReviewText</p>
+            <small>Rating: @item.Rating</small>
+        </div>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<MoviesStore.Core.Entities.Movie>
+<div>
+    <div class="container-fluid">
+        <div class="row">
+                            @*here Model represents the data passing from the HomeController (the stuff after @model)*@
+            @foreach (var movie in Model)
+                {
+@*<!--when we don't use Partial View-->
+            <div class="col-6 cl-lg-3 col-sm-4 col-xl-2">
+                <a>
+           <!--alt can be read as text when img is not loaded; also is for screen reader  -->
+                    <img src="@movie.PosterUrl" class="img-fluid" alt="@movie.Title"/>
+                </a>
+
+            </div>
+            *@
+
+        //call Partial View (using tag helper)
+                                        //need to specific model type (the @model for Partial View to receive)
+                <partial name="_MovieCard" model="movie" />
+        //Or another way to call Partial View (using HTML extension method)
+        @*     @await Html.PartialAsync("_MovieCard", movie)      *@
+        }
+        </div>
+    </div>
+</div>

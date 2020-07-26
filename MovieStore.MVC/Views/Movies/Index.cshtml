@@ -1,0 +1,43 @@
+﻿    @model List<MoviesStore.Core.Entities.Movie>
+
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+    <!--<h1>List of Top movies @ViewBag.MoviesCount</h1>-->
+
+    @*we need to tell our view whats the data it is receiving
+        in this case it's receiving list of Movies*@
+
+    @*I wanna use HTML table or HTML UL*@
+
+
+    @*if we need to write C# code, we need to use @ sign to start the statement    *@
+
+    @*  1.Place @model on top of the view with the expecting data type
+        2.We can access the actual data using Model (ASP.NET) alias for @model     *@
+    @*add class to use boostrap style*@
+
+    <table class="table">
+        <tr>
+            <td>
+                Id
+            </td>
+            <td>
+                Title
+            </td>
+            <td>
+                Budget
+            </td>
+        </tr>
+
+                       @*   Model here is an alias for @model at the top             *@ 
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td> @movie.Id</td>
+                <td> @movie.Title</td>
+                <td> @movie.Budget</td>
+            </tr>
+        }
+    </table>

@@ -1,0 +1,21 @@
+﻿<!--
+@{
+    ViewData["Title"] = "Create";
+}
+
+@ViewData["myname"];
+<h1>Create Movie</h1>
+
+@*show empty page; once enter information,send the page with data*@
+
+<form method="post">
+    @*"name" can specified label name
+        "id"
+    *@
+    Title: <input type="text" value="" name="title" id="" /> <br />
+    Budget: <input type="text" value="" name="budget" id="" /> <br />
+
+    @*info with name and value (name is the key, value is the value)*@
+    <input type="submit" value="Save Movie" />
+</form>
+    -->

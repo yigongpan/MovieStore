@@ -1,0 +1,12 @@
+﻿@model MoviesStore.Core.Entities.Movie
+    <div class="col-6 cl-lg-3 col-sm-4 col-xl-2">
+        <a asp-action="Details" asp-controller="Movies" asp-route-movieId="@Model.Id">
+            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />
+        </a>
+
+        @*href="/movies/Details/@Model.Id"*@
+
+
+        @*@Html.ActionLink(@Model.Title, "Details", "Movies", new { movieId = @Model.Id })*@
+    </div>
+

@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model int
+
+<div class="row">
+    <div class="col-lg-6 offset-3">
+        <div class="row">
+            <h1>Make a review</h1>
+        </div>
+        <div class="row">
+            <form action="/User/Review/@Model" method="post">
+                <div class="form-group">
+                    <label>Write a small review</label>
+                    <textarea class="form-control" id="ReviewText" name="ReviewText">
+
+                </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="ratings">Ratings</label>
+                    <input type="text" class="form-control" value="" id="Rating" name="Rating"/>
+                    <small class="form-text text-muted">(Please rate this movie from 1 to 10, 1 is worst and 10 is best)</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        
+    </div>
+        
+
+    
+</div>

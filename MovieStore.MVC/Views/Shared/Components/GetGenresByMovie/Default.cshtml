@@ -1,0 +1,5 @@
+﻿@model IEnumerable<MoviesStore.Core.Entities.Genre>
+@foreach (var genre in Model)
+{
+    <a asp-action="Genre" asp-controller="Movies" class="d-inline-block bg-secondary small rounded mb-3" asp-route-id="@genre.Id"> @genre.Name</a>
+} 

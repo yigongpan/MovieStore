@@ -1,0 +1,122 @@
+﻿@model MoviesStore.Core.Models.Response.MovieDetailsModel
+@using System;
+<div class="bg-dark container-fluid clearfix" style="background-image:url(@Model.Movie.BackdropUrl);background-size:100% 100%; opacity:0.9;">
+    <div class="float-left p-2 w-30">
+        <img src="@Model.Movie.PosterUrl" class="" />
+    </div>
+    <div class="float-left p-2 w-50">
+        <h1 class="text-white">@Model.Movie.Title</h1>
+        <p class="text-sm-left text-dark mb-1">@Model.Movie.Tagline</p>
+        <p class="text-md-left mb-1">@Model.Movie.RunTime|@Model.Movie.ReleaseDate.Value.ToString("yyyy")</p>
+        <div>
+            @await Component.InvokeAsync("GetGenresByMovie", new { id = Model.Movie.Id })
+        </div>
+        <p class="text-md-left text-black bg-warning d-inline p-2 rounded" style="">@Model.Movie.Rating</p>
+        <p class="text-md-left text-white">@Model.Movie.Overview</p>
+    </div>
+    <div class="float-left p-2 w-20">
+        <div>
+            @if (Model.CheckFavorited)
+            {
+                <form method="post" asp-action="DeleteFavorite" asp-controller="User">
+                    <button type="submit"><i class="fa fa-heart" aria-hidden="true"></i></button>
+                    <input type="hidden" value="@Model.Movie.Id" name="MovieId" />
+                </form>
+            }
+            else
+            {
+                <form method="post" asp-action="Favorite" asp-controller="User">
+                    <button type="submit"><i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                    <input type="hidden" value="@Model.Movie.Id" name="MovieId" />
+                </form>
+            }
+
+        </div>
+        <div>
+            <ul class="list-unstyled">
+                <li>
+                    @if (Model.CheckReviewed)
+                    {
+                        <button type="button" class="btn btn-primary btn-block m-1">Reviewed<i class="fa fa-check" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary btn-block m-1" data-toggle="modal" data-target="#exampleModal">Review</button>
+                    }
+
+                </li>
+
+                <li><button type="button" class="btn btn-primary btn-block m-1">Trailer</button></li>
+                <li>
+                    @if (Model.CheckPurchased)
+                    {
+                        <a href="https://www.youtube.com/" class="btn bg-warning btn-primary btn-block m-1">Watch Now <i class="fa fa-play" aria-hidden="true"></i></a>
+                    }
+                    else
+                    {
+                        <form method="post" asp-action="Purchase" asp-controller="User">
+                            <input type="submit" value="BUY $@Model.Movie.Price" class="btn btn-primary btn-block m-1" />
+                            @*this name tag should be the same as PurchaseRequestModel.property, so this input can pass value to that property*@
+                            <input type="hidden" value="@Model.Movie.Id" name="MovieId" />
+                        </form>
+                    }
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="bg-light clearfix">
+    <div class="float-left w-25 pt-3 pl-3" style="background-color:#dcdcdc;height:15rem">
+        <h4 class="sm">MOVIE FACTS</h4>
+        <ul class="list-unstyled">
+            <li>Release Date <span class="bg-dark rounded text-white">&nbsp;@Model.Movie.ReleaseDate.Value.ToString("MM dd yyyy")&nbsp;</span></li>
+            <li>Run time <span class="bg-dark rounded text-white">&nbsp;@Model.Movie.RunTime&nbsp;</span></li>
+            <li>Box Office <span class="bg-dark rounded text-white">&nbsp;@Model.Movie.Revenue&nbsp;</span></li>
+            <li>Budget <span class="bg-dark rounded text-white">&nbsp;@Model.Movie.Budget&nbsp;</span></li>
+        </ul>
+        <button style="border-style:none"><i class="fa fa-window-maximize" aria-hidden="true"></i></button>
+        <button style="border-style:none"><i class="fa fa-share-square-o" aria-hidden="true"></i></button>
+    </div>
+    <table class="table w-50 float-md-right">
+        <thead>
+            <tr>
+                <th>Cast</th>
+                <th>Cast Id</th>
+                <th>Character</th>
+                <th>Cast Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var MovieCast in @Model.Movie.MovieCasts)
+            {
+                <tr><td><img src="@MovieCast.Cast.ProfilePath" style="height:5rem" /></td><td> @MovieCast.CastId</td><td>@MovieCast.Character</td><td><a href="#">@MovieCast.Cast.Name</a></td></tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="modal fade" id="exampleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Review</h5>
+                <button class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="Review" asp-controller="User">
+                    <input type="number" name="rating" value="" max="10"/>
+                    <input type="text" name="ReviewText" value="" />
+                    <input type="hidden" value="@Model.Movie.Id" name="MovieId" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
